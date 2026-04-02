@@ -99,7 +99,7 @@ export const en = {
   },
   walkthrough: {
     badge: "Quick tour",
-    title: "Welcome to Bambuu",
+    title: "Welcome to Amovi",
     subtitle: "A 20-second walkthrough for your first login.",
     step1Title: "See your money in one place",
     step1Description:
@@ -113,7 +113,7 @@ export const en = {
     back: "Back",
     next: "Next",
     skip: "Skip",
-    finish: "Start using Bambuu",
+    finish: "Start using Amovi",
   },
   home: {
     goodMorning: "Good morning",

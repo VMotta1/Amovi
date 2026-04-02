@@ -1,16 +1,6 @@
-import { useEffect } from 'react';
-import { RouterProvider } from 'react-router';
-import { router } from './routes';
-import ChartWrapper from './components/ChartWrapper';
+import { RouterProvider } from "react-router";
+import { router } from "./routes";
 
 export default function App() {
-  useEffect(() => {
-    document.documentElement.classList.remove("dark");
-  }, []);
-
-  return (
-    <ChartWrapper>
-      <RouterProvider router={router} />
-    </ChartWrapper>
-  );
+  return <RouterProvider router={router} />;
 }

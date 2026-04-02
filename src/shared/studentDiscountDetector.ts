@@ -19,7 +19,7 @@ const MONTHLY_GAP_MAX = 35;
 const YEARLY_GAP_MIN = 330;
 const YEARLY_GAP_MAX = 390;
 
-const GENERIC_MATCH_TERMS = new Set(["apple", "google", "amazon"]);
+const GENERIC_MATCH_TERMS = new Set(["apple", "google", "amazon", "microsoft", "proton"]);
 
 export interface StudentDiscountTransaction {
   id: string;
@@ -85,23 +85,80 @@ function normalizeValue(value: string) {
 }
 
 export function normalizeMerchantName(input: string) {
+  // Preserve "1password" before digit-stripping in normalizeValue
+  const preLower = input.toLowerCase().trim();
+  if (preLower.includes("1password") || preLower.includes("1 password") || preLower.includes("agilebits")) return "1password";
+
   const normalized = normalizeValue(input);
 
+  // Music & Video Streaming
   if (normalized.includes("spotify")) return "spotify";
   if (normalized.includes("youtube")) return "youtube premium";
   if (normalized.includes("apple music")) return "apple music";
   if (normalized.includes("hulu")) return "hulu";
   if (normalized === "max" || normalized.includes("hbo max") || normalized.startsWith("max ")) return "max";
+  if (normalized.includes("paramount")) return "paramount+";
+  if (normalized.includes("mubi")) return "mubi";
+
+  // Developer Tools
   if (normalized.includes("copilot")) return "github copilot";
   if (normalized.includes("github")) return "github";
+  if (normalized.includes("jetbrains") || normalized.includes("intellij") || normalized.includes("pycharm") || normalized.includes("webstorm") || normalized.includes("datagrip") || normalized.includes("rider") || normalized.includes("clion")) return "jetbrains";
+
+  // Microsoft
   if (normalized.includes("microsoft 365") || normalized.includes("office 365")) return "microsoft 365";
   if (normalized.includes("msft")) return "microsoft 365";
+
+  // Apple
   if (normalized.includes("apple")) return "apple";
+
+  // Productivity & Writing
   if (normalized.includes("notion")) return "notion";
   if (normalized.includes("canva")) return "canva";
+  if (normalized.includes("evernote")) return "evernote";
+  if (normalized.includes("todoist") || normalized.includes("doist")) return "todoist";
+  if (normalized.includes("grammarly")) return "grammarly";
+  if (normalized.includes("quillbot") || normalized.includes("quill bot")) return "quillbot";
+  if (normalized.includes("dropbox")) return "dropbox";
+  if (normalized.includes("monday")) return "monday.com";
+  if (normalized.includes("miro")) return "miro";
+
+  // Design
   if (normalized.includes("adobe")) return "adobe";
+  if (normalized.includes("sketch")) return "sketch";
+
+  // VPN & Security
+  if (normalized.includes("nordvpn") || normalized.includes("nord vpn") || normalized === "nord") return "nordvpn";
+  if (normalized.includes("surfshark")) return "surfshark";
+  if (normalized.includes("protonvpn") || normalized.includes("proton vpn") || normalized.includes("protonmail") || normalized.includes("proton mail") || normalized.includes("proton drive") || normalized === "proton") return "proton";
+
+  // Shopping
   if (normalized.includes("amazon prime") || normalized.includes("amzn prime")) return "amazon prime";
   if (normalized.includes("amazon") || normalized.includes("amzn")) return "amazon";
+
+  // Learning
+  if (normalized.includes("coursera")) return "coursera";
+  if (normalized.includes("datacamp") || normalized.includes("data camp")) return "datacamp";
+  if (normalized.includes("masterclass") || normalized.includes("master class")) return "masterclass";
+
+  // Wellness & Other
+  if (normalized.includes("headspace")) return "headspace";
+  if (normalized.includes("wix")) return "wix";
+
+  // Telecom
+  if (normalized.includes("rogers")) return "rogers";
+  if (normalized.includes("telus")) return "telus";
+
+  // AI Tools
+  if (normalized.includes("gemini") || normalized.includes("notebooklm") || normalized.includes("google ai")) return "gemini";
+  if (normalized.includes("google")) return "google";
+  if (normalized.includes("cursor")) return "cursor";
+  if (normalized.includes("perplexity")) return "perplexity";
+  if (normalized.includes("julius")) return "julius";
+  if (normalized.includes("hyperwrite") || normalized.includes("hyper write")) return "hyperwrite";
+  if (normalized.includes("otter")) return "otter";
+
+  // Streaming
   if (normalized.includes("netflix")) return "netflix";
 
   return normalized;
@@ -249,14 +306,20 @@ function scoreCatalogMatch(
 
 function pickCatalogMatch(normalizedMerchant: string, country?: string | null) {
   const region = resolveRegion(country);
-  const candidates = STUDENT_DISCOUNT_CATALOG_SEED.filter(
-    (offer) => offer.isActive && offer.region === region,
-  )
-    .map((offer) => scoreCatalogMatch(normalizedMerchant, offer))
-    .filter((match): match is NonNullable<typeof match> => Boolean(match))
-    .sort((left, right) => right.score - left.score);
 
-  return candidates[0] ?? null;
+  const score = (r: string) =>
+    STUDENT_DISCOUNT_CATALOG_SEED.filter((offer) => offer.isActive && offer.region === r)
+      .map((offer) => scoreCatalogMatch(normalizedMerchant, offer))
+      .filter((match): match is NonNullable<typeof match> => Boolean(match))
+      .sort((left, right) => right.score - left.score);
+
+  // Try the user's region first, fall back to the other major region
+  const primary = score(region);
+  if (primary.length > 0) return primary[0];
+
+  const fallbackRegion = region === "CA" ? "US" : "CA";
+  const fallback = score(fallbackRegion);
+  return fallback[0] ?? null;
 }
 
 export function detectStudentDiscountOpportunities({

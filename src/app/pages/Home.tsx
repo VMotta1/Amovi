@@ -50,7 +50,6 @@ import {
   subDays,
 } from "date-fns";
 import { useUserCurrency } from "../hooks/useUserCurrency";
-import { BRAND_LOGO_SRC } from "../lib/branding";
 import { convertCurrency, formatCurrency, formatCurrencyWithCode } from "../lib/currency";
 import {
   createGoalContribution,
@@ -486,11 +485,6 @@ export default function Home() {
               {getGreeting()}
               {userName ? `, ${userName}` : ""}!
             </h2>
-            <img
-              src={BRAND_LOGO_SRC}
-              alt="Bambuu logo"
-              className="h-8 w-8 object-contain"
-            />
           </div>
           <p className="text-muted-foreground">{t("home.overview")}</p>
         </div>
@@ -827,42 +821,17 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative hidden w-[132px] min-h-[250px] overflow-visible pt-6 sm:block sm:min-h-[320px]">
-              <div className="absolute inset-y-0 left-1/2 w-[86px] -translate-x-1/2 overflow-hidden rounded-[999px]">
-                <img
-                  src="/bamboo.png"
-                  alt="Bamboo"
-                  className="absolute inset-0 h-full w-full object-contain object-center opacity-95"
+            <div className="relative hidden w-[52px] min-h-[250px] sm:flex sm:min-h-[320px] flex-col items-center gap-2">
+              <span className="text-xs font-semibold text-primary tabular-nums">{savingsProgress.toFixed(0)}%</span>
+              <div className="relative flex-1 w-5 rounded-full bg-secondary border border-border overflow-hidden">
+                <div
+                  className="absolute bottom-0 left-0 right-0 rounded-full bg-primary transition-all duration-700 ease-out"
+                  style={{ height: `${Math.min(savingsProgress, 100)}%` }}
                 />
               </div>
-
-              <div
-                className="absolute left-1/2 z-10 transition-all duration-700 ease-out"
-                style={{ bottom: `${Math.min(Math.max(savingsProgress - 6, 0), 74)}%`, transform: "translateX(-56%)" }}
-              >
-                <div className="relative">
-                  <img
-                    src="/panda.svg"
-                    alt="Panda"
-                    className="h-[74px] w-auto drop-shadow-md transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 rounded-md border border-primary/25 bg-white px-2 py-1 shadow-sm">
-                    <div className="text-xs font-medium text-primary">{savingsProgress.toFixed(0)}%</div>
-                  </div>
-                  {savingsProgress >= 100 ? (
-                    <div className="absolute -left-6 -top-16 w-[132px]">
-                      <div className="relative border-4 border-[#2f3b2f] bg-[#fffdf4] px-3 py-2 shadow-[4px_4px_0_#d9d2b6]">
-                        <div className="font-mono text-[10px] leading-4 text-[#2f3b2f]">
-                          You made it
-                          happen! 🎋
-                        </div>
-                        <div className="absolute bottom-[-12px] left-8 h-0 w-0 border-l-[10px] border-r-[6px] border-t-[12px] border-l-transparent border-r-transparent border-t-[#2f3b2f]" />
-                        <div className="absolute bottom-[-8px] left-[34px] h-0 w-0 border-l-[8px] border-r-[4px] border-t-[10px] border-l-transparent border-r-transparent border-t-[#fffdf4]" />
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
+              {savingsProgress >= 100 && (
+                <span className="text-xs font-medium text-primary text-center leading-tight">Goal reached! 🎉</span>
+              )}
             </div>
 
             {pinnedGoal ? (

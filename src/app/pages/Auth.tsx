@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../providers/AuthProvider";
-import { BRAND_LOGO_SRC } from "../lib/branding";
 import { useI18n } from "../providers/I18nProvider";
 
 export default function Auth() {
@@ -80,16 +79,16 @@ export default function Auth() {
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
-          <img
-            src={BRAND_LOGO_SRC}
-            alt="Bambuu logo"
-            className="mx-auto mb-5 h-24 w-24 object-contain"
-          />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-5 shadow-lg shadow-primary/30">
+            <svg width="28" height="28" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1L10.5 6H14L10.5 9.5L12 14L8 11.5L4 14L5.5 9.5L2 6H5.5L8 1Z" fill="white" />
+            </svg>
+          </div>
           <h1
-            className="mb-3 text-5xl uppercase tracking-[0.26em]"
-            style={{ fontFamily: '"Montserrat", sans-serif' }}
+            className="mb-3 text-5xl font-bold uppercase tracking-[0.22em] text-foreground"
+            style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
           >
-            BAMBUU
+            AMOVI
           </h1>
           <p className="text-lg text-muted-foreground">{t("auth.subtitle")}</p>
         </div>

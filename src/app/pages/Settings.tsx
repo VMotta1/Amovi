@@ -28,12 +28,12 @@ import {
   Loader2,
   Landmark,
   RefreshCw,
+  Sparkles,
 } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { usePlaidLink } from "react-plaid-link";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../providers/AuthProvider";
-import { BRAND_LOGO_SRC } from "../lib/branding";
 import { SUPPORTED_LANGUAGES } from "../lib/i18n";
 import { useI18n } from "../providers/I18nProvider";
 import {
@@ -160,7 +160,9 @@ export default function Settings() {
   const [currency, setCurrency] = useState("USD");
   const [country, setCountry] = useState("US");
   const [dateFormat, setDateFormat] = useState("MM/DD/YYYY");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    try { return localStorage.getItem("amovi-dark-mode") === "true"; } catch { return false; }
+  });
   const [savedNotification, setSavedNotification] = useState("");
   const [errorNotification, setErrorNotification] = useState("");
   const [budgetAlerts, setBudgetAlerts] = useState(true);
@@ -195,6 +197,7 @@ export default function Settings() {
     } else {
       document.documentElement.classList.remove("dark");
     }
+    try { localStorage.setItem("amovi-dark-mode", String(darkMode)); } catch { /* ignore */ }
   }, [darkMode]);
 
   useEffect(() => {
@@ -233,7 +236,7 @@ export default function Settings() {
         setCurrency(settings.currency);
         setCountry(settings.country);
         setDateFormat(settings.dateFormat);
-        setDarkMode(settings.darkMode);
+        // Dark mode preference lives in localStorage only (set at mount via useState initializer)
         setBudgetAlerts(settings.budgetAlerts);
         setSubscriptionReminders(settings.subscriptionReminders);
         setWeeklySummary(settings.weeklySummary);
@@ -530,6 +533,26 @@ export default function Settings() {
     if (selectedItemId) fetchTransactions(selectedItemId);
   }, [selectedItemId, fetchTransactions]);
 
+  const handleLoadTestAccount = async () => {
+    const apiUrl = buildApiUrl("/api/plaid/sandbox/create-test-token");
+    if (!apiUrl) return;
+    setIsLinking(true);
+    setPlaidError(null);
+    try {
+      const res = await fetch(apiUrl, { method: "POST" });
+      const data = await res.json();
+      if (data.public_token) {
+        await handlePlaidSuccess(data.public_token);
+      } else {
+        setPlaidError(data.error?.error_message || "Failed to create test token.");
+      }
+    } catch {
+      setPlaidError("Could not reach the Plaid server. Make sure it is running on port 3001.");
+    } finally {
+      setIsLinking(false);
+    }
+  };
+
   const handlePlaidSuccess = async (publicToken: string) => {
     const apiUrl = buildApiUrl("/api/plaid/exchange-token");
     if (!apiUrl) {
@@ -660,8 +683,14 @@ export default function Settings() {
           <div className="space-y-6">
             <div className="flex items-center gap-6">
               <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center overflow-hidden border-4 border-border">
-                  {profilePhoto ? <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" /> : <span className="text-4xl">🐼</span>}
+                <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center overflow-hidden border-4 border-border">
+                  {profilePhoto ? (
+                    <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <svg className="w-10 h-10 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  )}
                 </div>
                 <label className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-2 rounded-full cursor-pointer hover:opacity-90 transition-opacity shadow-lg">
                   <Camera className="size-4" />
@@ -875,6 +904,7 @@ export default function Settings() {
                 {isLinking ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
                 {isLinking ? "Linking..." : "Link Your Bank Account"}
               </PlaidLinkButton>
+
               {!plaidApiAvailable && (
                 <p className="text-xs text-muted-foreground mt-3">
                   Plaid is disabled on this static deployment. Set <code className="bg-muted px-1.5 py-0.5 rounded text-[11px]">VITE_API_BASE_URL</code> to your hosted backend URL to enable it.
@@ -1307,12 +1337,12 @@ export default function Settings() {
         </div>
 
         <div className="bg-secondary border border-primary/20 rounded-xl p-6 text-center">
-          <img
-            src={BRAND_LOGO_SRC}
-            alt="Bambuu logo"
-            className="mx-auto mb-2 h-12 w-12 object-contain"
-          />
-          <h4 className="mb-2 text-primary">Bambuu v1.0</h4>
+          <div className="mx-auto mb-3 w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1L10.5 6H14L10.5 9.5L12 14L8 11.5L4 14L5.5 9.5L2 6H5.5L8 1Z" fill="white" />
+            </svg>
+          </div>
+          <h4 className="mb-2 text-primary">Amovi v1.0</h4>
           <p className="text-sm text-muted-foreground">{t("settingsPage.footer")}</p>
         </div>
       </div>

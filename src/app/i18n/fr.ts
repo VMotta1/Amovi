@@ -99,7 +99,7 @@ export const fr = {
   },
   walkthrough: {
     badge: "Visite rapide",
-    title: "Bienvenue sur Bambuu",
+    title: "Bienvenue sur Amovi",
     subtitle: "Un mini tutoriel de 20 secondes pour votre première connexion.",
     step1Title: "Voyez votre argent au même endroit",
     step1Description:

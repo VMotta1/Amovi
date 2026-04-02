@@ -1,16 +1,22 @@
-import { useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { Home, BarChart3, TrendingDown, Target, TrendingUp, Settings, Repeat } from "lucide-react";
+import {
+  Home,
+  BarChart3,
+  TrendingDown,
+  Target,
+  TrendingUp,
+  Settings,
+  Repeat,
+  Sparkles,
+} from "lucide-react";
 import { useI18n } from "../providers/I18nProvider";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { cn } from "./ui/utils";
 
 interface NavigationProps {
-  mobileOpen?: boolean;
-  onMobileOpenChange?: (open: boolean) => void;
+  onNavigate?: () => void;
 }
 
-export default function Navigation({ mobileOpen = false, onMobileOpenChange }: NavigationProps) {
+export default function Navigation({ onNavigate }: NavigationProps) {
   const location = useLocation();
   const { t } = useI18n();
 
@@ -24,67 +30,52 @@ export default function Navigation({ mobileOpen = false, onMobileOpenChange }: N
     { to: "/settings", icon: Settings, label: t("nav.settings") },
   ];
 
-  useEffect(() => {
-    onMobileOpenChange?.(false);
-  }, [location.pathname, onMobileOpenChange]);
-
   return (
-    <>
-      <nav className="fixed inset-x-0 top-28 z-40 hidden h-16 border-b border-border bg-card px-6 shadow-sm md:block">
-        <div className="mx-auto flex h-full max-w-7xl items-center justify-around">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.to;
+    <nav className="flex flex-col flex-1 px-3 py-4 gap-1 overflow-y-auto">
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        const isActive = location.pathname === item.to;
 
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={cn(
-                  "flex flex-col items-center gap-1 transition-colors",
-                  isActive ? "text-primary" : "text-muted-foreground hover:text-primary",
-                )}
-              >
-                <Icon className="size-6" />
-                <span className="text-xs">{item.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+        return (
+          <Link
+            key={item.to}
+            to={item.to}
+            onClick={onNavigate}
+            className={cn(
+              "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+              isActive
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+            )}
+          >
+            {isActive && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-primary" />
+            )}
+            <Icon className="size-4 shrink-0" />
+            <span>{item.label}</span>
+          </Link>
+        );
+      })}
 
-      {onMobileOpenChange ? (
-        <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
-          <SheetContent side="left" className="w-[86%] max-w-xs border-r bg-card p-0">
-            <SheetHeader className="border-b border-border px-5 py-5 text-left">
-              <SheetTitle className="text-base">Menu</SheetTitle>
-            </SheetHeader>
-            <nav className="flex flex-col gap-2 px-3 py-4">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.to;
-
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => onMobileOpenChange(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors",
-                      isActive
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "text-foreground hover:bg-muted",
-                    )}
-                  >
-                    <Icon className="size-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-          </SheetContent>
-        </Sheet>
-      ) : null}
-    </>
+      {/* Divider */}
+      <div className="mt-auto pt-4 border-t border-border">
+        <Link
+          to="/upload"
+          onClick={onNavigate}
+          className={cn(
+            "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+            location.pathname === "/upload" || location.pathname === "/results"
+              ? "bg-accent/10 text-accent"
+              : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+          )}
+        >
+          {(location.pathname === "/upload" || location.pathname === "/results") && (
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-accent" />
+          )}
+          <Sparkles className="size-4 shrink-0" />
+          <span>AI Discount Scanner</span>
+        </Link>
+      </div>
+    </nav>
   );
 }

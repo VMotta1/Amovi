@@ -3,7 +3,6 @@ import { Plus, Edit2, X, Calendar, DollarSign, AlertCircle, Sparkles, CheckCircl
 import StudentDiscountDetectorCard from "../components/StudentDiscountDetectorCard";
 import { useUserCurrency } from "../hooks/useUserCurrency";
 import { formatCurrency } from "../lib/currency";
-import { BRAND_LOGO_SRC } from "../lib/branding";
 import {
   createSubscription,
   getCachedSubscriptions,
@@ -353,11 +352,6 @@ export default function Subscriptions() {
                 })}
               </p>
             </div>
-            <img
-              src={BRAND_LOGO_SRC}
-              alt="Bambuu logo"
-              className="h-16 w-16 object-contain"
-            />
           </div>
         </div>
 

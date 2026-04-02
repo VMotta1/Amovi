@@ -41,8 +41,8 @@ interface TransactionListItem {
 import { getCategoryIcon } from "../lib/categoryIcons";
 import { usePlaidData, plaidToTransaction } from "../hooks/usePlaidData";
 
-const PLAID_OVERRIDES_KEY = "bambu_plaid_tx_overrides";
-const PLAID_HIDDEN_KEY = "bambu_plaid_tx_hidden";
+const PLAID_OVERRIDES_KEY = "amovi_plaid_tx_overrides";
+const PLAID_HIDDEN_KEY = "amovi_plaid_tx_hidden";
 
 function getPlaidOverrides(): Record<string, { name?: string; category?: string; amount?: number }> {
   try { return JSON.parse(localStorage.getItem(PLAID_OVERRIDES_KEY) ?? "{}"); } catch { return {}; }

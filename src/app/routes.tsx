@@ -11,6 +11,8 @@ import Investments from "./pages/Investments";
 import Subscriptions from "./pages/Subscriptions";
 import Auth from "./pages/Auth";
 import Settings from "./pages/Settings";
+import Upload from "./pages/Upload";
+import Results from "./pages/Results";
 import { useAuth } from "./providers/AuthProvider";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -81,9 +83,16 @@ export const router = createHashRouter([
         path: "/settings",
         element: <Settings />,
       },
+      {
+        path: "/upload",
+        element: <Upload />,
+      },
+      {
+        path: "/results",
+        element: <Results />,
+      },
     ],
   },
-  // Redirect old routes to new combined page
   {
     path: "/budget-settings",
     element: <Navigate to="/budget-goals" replace />,

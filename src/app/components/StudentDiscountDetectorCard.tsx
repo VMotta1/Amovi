@@ -1,4 +1,4 @@
-import { BadgeDollarSign, ExternalLink, GraduationCap } from "lucide-react";
+import { BadgeDollarSign, ExternalLink, GraduationCap, Globe } from "lucide-react";
 import { formatCurrency } from "../lib/currency";
 import type { StudentDiscountOpportunity } from "../../shared/studentDiscountDetector";
 
@@ -31,7 +31,7 @@ export default function StudentDiscountDetectorCard({
             Student Discount Detector
           </h3>
           <p className="text-sm text-muted-foreground">
-            We only flag likely student offers. Bambu does not switch plans automatically.
+            Amovi uses AI to scan every transaction for student discounts. We never switch plans automatically.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3 md:min-w-[260px]">
@@ -52,12 +52,16 @@ export default function StudentDiscountDetectorCard({
 
       <div className="mt-5 space-y-3">
         {isLoading ? (
-          <div className="rounded-lg bg-muted px-4 py-5 text-sm text-muted-foreground">
-            Scanning recurring transactions for eligible student offers...
+          <div className="rounded-lg bg-muted px-4 py-5 text-sm text-muted-foreground flex items-center gap-3">
+            <svg className="size-4 animate-spin shrink-0 text-primary" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Claude is scanning all your transactions for student discounts — including web search for new deals…
           </div>
         ) : opportunities.length === 0 ? (
           <div className="rounded-lg bg-muted px-4 py-5 text-sm text-muted-foreground">
-            No eligible student discount subscriptions were detected yet. Add more subscription history or set your country in Settings.
+            No student discounts detected yet. Connect your bank via Plaid and make sure your country is set in Settings. Claude will scan every transaction automatically.
           </div>
         ) : (
           opportunities.map((opportunity) => (
@@ -73,11 +77,17 @@ export default function StudentDiscountDetectorCard({
                       className={`rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] ${
                         opportunity.matchConfidence === "high"
                           ? "bg-primary/15 text-primary"
-                          : "bg-amber-100 text-amber-700"
+                          : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
                       }`}
                     >
                       {opportunity.matchConfidence === "high" ? "Matched" : "Possible match"}
                     </span>
+                    {(opportunity as StudentDiscountOpportunity & { web_sourced?: boolean }).web_sourced && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-medium text-accent uppercase tracking-[0.12em]">
+                        <Globe className="size-3" />
+                        Web search
+                      </span>
+                    )}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Detected from {opportunity.normalizedMerchant} • billed{" "}
