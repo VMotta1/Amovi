@@ -1,0 +1,28 @@
+brand,aliases,category,student_discount,discount_type,discount_percent,discounted_price,eligibility,source,last_verified
+Adobe,adobe|adobe inc|adobe cc|adobe creative cloud|adobe* ,software,71% off Creative Cloud Pro,percent,71,$19.99/mo first year,Verified student or teacher,https://www.adobe.com/creativecloud/buy/students.html,2026-04-02
+Microsoft,Microsoft 365|Office 365|M365,productivity,12 months free Microsoft 365 Premium,free,,$0 for 12 months,Verified higher-ed student,https://www.microsoft.com/en-us/microsoft-365/college-student-pricing,2026-04-02
+Notion,Notion Labs|Notion AI|Notion Workspace,productivity,Free Plus plan for students,free,,Free Plus plan,Student or educator with school email,https://www.notion.com/pricing,2026-04-02
+Figma,Figma Design|FigJam|Figma Education,productivity,Free Figma for Education,free,,Free Education plan,Verified student or educator,https://help.figma.com/hc/en-us/articles/360041061214-Figma-for-Education,2026-04-02
+Miro,Miro Board|Miro Whiteboard|Miro Education,productivity,Free Education plan,free,,Free Education plan,Student or staff at qualified institution,https://help.miro.com/hc/en-us/articles/360017730473-Education-plan,2026-04-02
+GitHub,GitHub Education|Student Developer Pack|GitHub Copilot,software,Free GitHub Education benefits,free,,Free GitHub Copilot Pro,Verified student,https://docs.github.com/en/education/about-github-education/github-education-for-students/about-github-education-for-students,2026-04-02
+JetBrains,IntelliJ|PyCharm|JetBrains Student Pack,software,Free JetBrains Student Pack,free,,Free student license,Verified student or teacher,https://sales.jetbrains.com/hc/en-gb/articles/207241195-Do-you-offer-free-educational-licenses-for-students-and-teachers,2026-04-02
+Grammarly,Grammarly Pro|Grammarly Premium|Grammarly Student,ai_tool,50% off Grammarly Pro,percent,50,,Verified student via SheerID,https://support.grammarly.com/hc/en-us/articles/38895500890125-Does-Grammarly-offer-discounts-for-students,2026-04-02
+Autodesk,AutoCAD|Fusion|Autodesk Education,software,Free Autodesk Education plan,free,,Free 1-year student plan,Eligible student or educator,https://www.autodesk.com/education/home,2026-04-02
+Spotify,spotify|spotify usa|spotify ab|spotify premium|spotify*|spotify stockholm,streaming,$6.99/mo student plan with Hulu,price,,$6.99/mo,Eligible accredited higher-ed student,https://www.spotify.com/us/student/,2026-04-02
+YouTube,youtube|youtube premium|youtube music|youtube*|google youtube,streaming,Student plan pricing with annual verification,price,,,Full-time student at approved institution,https://support.google.com/youtube/answer/9158808?hl=en,2026-04-02
+Hulu,Hulu Student|Hulu With Ads|Hulu College,streaming,$1.99/mo Hulu student deal,price,83,$1.99/mo,Verified U.S. college student,https://www.hulu.com/student,2026-04-02
+Apple Music,Apple Music Student|Apple Student Music|Apple Music + TV,streaming,$5.99/mo student plan,price,,$5.99/mo,Verified college or university student,https://www.apple.com/apple-music/,2026-04-02
+Paramount+,Paramount Plus|Paramount+ Student|PPlus,streaming,50% off any Paramount+ plan,percent,50,,Verified U.S. student,https://www.paramountplus.com/account/edu/,2026-04-02
+Amazon,amazon|amazon prime|amazon.ca|amzn|amazon* ,retail,50% off Prime for students and young adults,percent,50,$7.49/mo or $69/yr,18-24 or enrolled higher-ed student,https://www.aboutamazon.com/news/retail/amazon-prime-for-young-adults,2026-04-02
+DoorDash,DashPass Student|DoorDash Student|DashPass,delivery,$4.99/mo DashPass for Students,price,,$4.99/mo,Accredited college or university student,https://about.doordash.com/en-us/news/doordash-launches-dashpass-for-students-membership-plan,2026-04-02
+Samsung,Samsung Education|Samsung Offer Program|Samsung Student,retail,Up to 30% off with Education Offer Program,percent,30,,Verified student or educator,https://www.samsung.com/us/shop/offer-program/education/,2026-04-02
+Dell,Dell Student|Dell Education|Dell Rewards,retail,10% off eligible products,percent,10,,Verified student via Dell Rewards,https://www.dell.com/student,2026-04-02
+Nike,Nike Student|Nike App Student|Nike.com Student,retail,10% off most items,percent,10,,Eligible U.S. high school or college student,https://www.nike.com/us/en/help/a/student-discount,2026-04-02
+Levi's,Levis|Levi Strauss|Levis Student,retail,10% off eligible orders,percent,10,,U.S. college or university student,https://help.levi.com/hc/en-us/articles/31500372066573-Student-Discount-Program-for-Levi-s-Customers,2026-04-02
+ChatGPT,chatgpt|openai|openai chatgpt|chatgpt subscription,ai_tool,Student discount or education pricing varies,custom,,,Varies by offer or institution,https://openai.com,2026-04-02
+Canva,canva|canva pro|canva subscription|canva* ,productivity,Free Canva for Education,free,,Free education access,Verified student or educator,https://www.canva.com/education/,2026-04-02
+Uber,uber|uber trip|uber eats|uber*trip|uber bv,transport,Student discounts or promos may apply,custom,,,Varies by region and offer,https://www.uber.com,2026-04-02
+Apple,apple|apple.com bill|itunes|apple services|apple.com/bill,retail,Student pricing on eligible Apple products,percent,10,,Verified student,https://www.apple.com/education/,2026-04-02
+
+
+# Last checked: 2026-04-02 15:02:04.947200
