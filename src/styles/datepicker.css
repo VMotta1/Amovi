@@ -1,0 +1,128 @@
+/* React Day Picker Custom Styling for Bambuu Theme */
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: var(--color-primary);
+  --rdp-background-color: var(--color-card);
+  --rdp-accent-color-dark: var(--color-primary);
+  --rdp-background-color-dark: var(--color-card);
+  --rdp-outline: 2px solid var(--color-primary);
+  --rdp-outline-selected: 2px solid var(--color-primary);
+  margin: 0;
+}
+
+.rdp-months {
+  display: flex;
+  justify-content: center;
+}
+
+.rdp-month {
+  margin: 0;
+}
+
+.rdp-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.rdp-caption_label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
+.rdp-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rdp-nav_button {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-muted);
+  color: var(--color-muted-foreground);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rdp-nav_button:hover {
+  background-color: var(--color-secondary);
+}
+
+.rdp-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.rdp-head_cell {
+  color: var(--color-muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.rdp-cell {
+  text-align: center;
+  padding: 2px;
+}
+
+.rdp-day {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: var(--color-foreground);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rdp-day:hover:not(.rdp-day_selected):not(.rdp-day_disabled) {
+  background-color: var(--color-secondary);
+}
+
+.rdp-day_selected {
+  background-color: var(--color-primary) !important;
+  color: var(--color-primary-foreground) !important;
+  font-weight: 500;
+}
+
+.rdp-day_today:not(.rdp-day_selected) {
+  background-color: var(--color-accent);
+  color: var(--color-accent-foreground);
+  font-weight: 500;
+}
+
+.rdp-day_outside {
+  color: var(--color-muted-foreground);
+  opacity: 0.5;
+}
+
+.rdp-day_disabled {
+  color: var(--color-muted-foreground);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.rdp-day_disabled:hover {
+  background-color: transparent;
+}
+
+/* Dark mode adjustments */
+.dark .rdp {
+  --rdp-accent-color: var(--color-primary);
+  --rdp-background-color: var(--color-card);
+}
